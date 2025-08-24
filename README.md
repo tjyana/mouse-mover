@@ -39,13 +39,38 @@ An intelligent, mood-based mouse movement simulator that keeps your computer act
 
 2. **Install dependencies**
    ```bash
-   pip install pyautogui screeninfo
+   pip install -r requirements.txt
    ```
 
 3. **Run the application**
    ```bash
    python app.py
    ```
+
+### Alternative Installation
+If you prefer to install dependencies manually:
+```bash
+pip install pyautogui>=0.9.50 screeninfo>=0.8
+```
+
+### Virtual Environment (Recommended)
+For isolated dependency management:
+```bash
+# Create virtual environment
+python -m venv mouse-mover-env
+
+# Activate virtual environment
+# On macOS/Linux:
+source mouse-mover-env/bin/activate
+# On Windows:
+mouse-mover-env\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+python app.py
+```
 
 ## 🚀 Usage
 
@@ -89,9 +114,11 @@ Press `Ctrl+C` to safely stop the script.
 
 ```
 mouse-mover/
-├── app.py          # Main orchestrator with mood system
-├── movements.py    # Movement function library
-└── README.md       # This file
+├── app.py              # Main orchestrator with mood system
+├── movements.py        # Movement function library
+├── requirements.txt    # Python dependencies
+├── README.md           # This file
+└── .gitignore          # Git ignore patterns
 ```
 
 ### `app.py`
@@ -105,6 +132,11 @@ mouse-mover/
 - Aggressive movements (hyperactive mood)
 - Natural movements (normal mood)
 - Calm movements (drowsy mood)
+
+### `requirements.txt`
+- Python package dependencies
+- PyAutoGUI for mouse control
+- Screeninfo for multi-monitor support
 
 ## ⚙️ Configuration
 
@@ -184,6 +216,13 @@ If the script isn't moving the mouse:
 - This is normal - the script continuously monitors mouse position
 - Polling happens every 100ms during pauses
 - You can increase sleep durations in movements if needed
+
+### Dependency Installation Issues
+If `pip install -r requirements.txt` fails:
+- Try upgrading pip: `pip install --upgrade pip`
+- Use Python 3 explicitly: `pip3 install -r requirements.txt`
+- On Ubuntu/Debian: `sudo apt-get install python3-tk python3-dev`
+- On macOS: May need Xcode command line tools: `xcode-select --install`
 
 ## 🔧 Customization
 
