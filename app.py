@@ -8,14 +8,15 @@ MOODS = {
     "hyperactive": {
         "name": "🚀 HYPERACTIVE",
         "movements": {
-            movements.zigzag_pattern: 25,
-            movements.short_fast_jiggle: 20,
-            movements.figure8_movement: 15,
-            movements.circular_movement: 10,
-            movements.random_point_movement: 15,
-            movements.quick_short_break: 10,
-            movements.s_curve_movement: 3,
-            movements.natural_drift_movement: 2
+            movements.frustrated_scribbling: 20,
+            movements.aggressive_zigzag: 18,
+            movements.big_fast_circle: 15,
+            movements.angry_shaking: 12,
+            movements.upward_jabbing: 10,
+            movements.frantic_corner_search: 10,
+            movements.short_fast_jiggle: 8,
+            movements.zigzag_pattern: 5,
+            movements.quick_short_break: 2
         }
     },
     "normal": {
