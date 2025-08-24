@@ -165,26 +165,29 @@ def natural_drift_movement(min_x, min_y, max_x, max_y):
         
         time.sleep(random.uniform(0.2, 0.6))
 
-def human_like_movements(min_x, min_y, max_x, max_y):
-    """
-    Performs a sequence of natural, human-like mouse movements by calling
-    individual movement pattern functions.
-    """
-    print("Starting human-like movements...")
-    
-    # Execute different movement patterns with pauses between them
-    s_curve_movement(min_x, min_y, max_x, max_y)
-    time.sleep(random.uniform(0.5, 1.0))
-    
-    circular_movement(min_x, min_y, max_x, max_y)
-    time.sleep(random.uniform(0.3, 0.7))
-    
-    figure8_movement(min_x, min_y, max_x, max_y)
-    time.sleep(random.uniform(0.4, 0.8))
-    
-    natural_drift_movement(min_x, min_y, max_x, max_y)
-    
-    print("Human-like movements completed")
+
+def big_slow_move(min_x, min_y, max_x, max_y):
+    """Moves the mouse across a long distance over a few seconds."""
+    print("Action: Big slow move")
+    random_x = random.randint(min_x, max_x - 1)
+    random_y = random.randint(min_y, max_y - 1)
+    pyautogui.moveTo(random_x, random_y, duration=random.uniform(1.5, 4.0))
+
+def short_fast_jiggle(min_x, min_y, max_x, max_y):
+    """Moves the mouse a short distance very quickly."""
+    print("Action: Short fast jiggle")
+    # Get current mouse position
+    current_x, current_y = pyautogui.position()
+    # Calculate a small jiggle range, ensuring it stays within bounds
+    jiggle_x = max(min_x, min(max_x - 1, random.randint(current_x - 50, current_x + 50)))
+    jiggle_y = max(min_y, min(max_y - 1, random.randint(current_y - 50, current_y + 50)))
+    pyautogui.moveTo(jiggle_x, jiggle_y, duration=random.uniform(0.1, 0.4))
+
+def take_a_break():
+    """Do nothing for a while."""
+    sleep_time = random.uniform(3, 7)
+    print(f"Action: Taking a break for {sleep_time:.2f} seconds")
+    time.sleep(sleep_time)
 
 print("Starting multi-monitor mouse mover. Press Ctrl+C to stop.")
 
@@ -208,12 +211,6 @@ try:
     while True:
         # Zigzag pattern - rapid left-right movement down the screen
         zigzag_pattern(min_x, min_y, max_x, max_y)
-        
-        # Wait a bit before starting human-like patterns
-        time.sleep(1)
-        
-        # Human-like movements - natural curved motions
-        human_like_movements(min_x, min_y, max_x, max_y)
         
         # Wait a bit before starting random patterns
         time.sleep(1)
