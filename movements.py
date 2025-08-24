@@ -209,36 +209,56 @@ def random_point_movement(min_x, min_y, max_x, max_y):
 
 # === AGGRESSIVE MOVEMENT FUNCTIONS ===
 
-def big_fast_circle(min_x, min_y, max_x, max_y):
+def big_fast_sweeping(min_x, min_y, max_x, max_y):
     """
-    Performs a large, fast circular movement - aggressive and energetic.
+    Performs large, fast sweeping movements across the entire screen - aggressive and dramatic.
     """
-    print("Performing big fast circle...")
+    print("Performing big fast sweeping movements...")
     
-    # Calculate center point
-    center_x = (min_x + max_x) // 2
-    center_y = (min_y + max_y) // 2
-    
-    # Make the circle as large as possible within bounds
-    max_radius_x = min((max_x - min_x) // 3, (center_x - min_x), (max_x - center_x))
-    max_radius_y = min((max_y - min_y) // 3, (center_y - min_y), (max_y - center_y))
-    radius = min(max_radius_x, max_radius_y)
-    
-    circle_steps = 12  # Fewer steps = faster, more aggressive
-    
-    for i in range(circle_steps):
-        angle = (i / circle_steps) * 2 * math.pi
-        x = center_x + int(radius * math.cos(angle))
-        y = center_y + int(radius * math.sin(angle))
+    # Define different types of sweeping patterns
+    sweep_patterns = [
+        # Diagonal sweeps
+        [(min_x, min_y), (max_x - 1, max_y - 1)],  # Top-left to bottom-right
+        [(max_x - 1, min_y), (min_x, max_y - 1)],  # Top-right to bottom-left
+        [(min_x, max_y - 1), (max_x - 1, min_y)],  # Bottom-left to top-right
+        [(max_x - 1, max_y - 1), (min_x, min_y)],  # Bottom-right to top-left
         
-        # Ensure coordinates are within safe bounds
-        x = max(min_x, min(max_x - 1, x))
-        y = max(min_y, min(max_y - 1, y))
+        # Horizontal sweeps
+        [(min_x, (min_y + max_y) // 2), (max_x - 1, (min_y + max_y) // 2)],  # Left to right
+        [(max_x - 1, (min_y + max_y) // 2), (min_x, (min_y + max_y) // 2)],  # Right to left
         
-        # Very fast movement
-        duration = random.uniform(0.05, 0.12)
-        pyautogui.moveTo(x, y, duration=duration)
-        time.sleep(random.uniform(0.01, 0.03))  # Minimal pause
+        # Vertical sweeps
+        [((min_x + max_x) // 2, min_y), ((min_x + max_x) // 2, max_y - 1)],  # Top to bottom
+        [((min_x + max_x) // 2, max_y - 1), ((min_x + max_x) // 2, min_y)],  # Bottom to top
+        
+        # Arc sweeps
+        [(min_x, min_y), ((min_x + max_x) // 2, max_y - 1), (max_x - 1, min_y)],  # Arc sweep
+        [(max_x - 1, max_y - 1), ((min_x + max_x) // 2, min_y), (min_x, max_y - 1)],  # Reverse arc
+    ]
+    
+    # Perform 3-5 random sweeping movements
+    num_sweeps = random.randint(3, 5)
+    
+    for _ in range(num_sweeps):
+        pattern = random.choice(sweep_patterns)
+        
+        # If it's a multi-point pattern (like arcs), move through all points
+        for i, (x, y) in enumerate(pattern):
+            if i == 0:
+                # First point - move there quickly but not instantly
+                duration = random.uniform(0.15, 0.25)
+            else:
+                # Subsequent points - very fast sweeping motion
+                duration = random.uniform(0.08, 0.15)
+            
+            pyautogui.moveTo(x, y, duration=duration)
+            
+            # Very brief pause between sweep segments
+            if i < len(pattern) - 1:
+                time.sleep(random.uniform(0.02, 0.05))
+        
+        # Brief pause between complete sweeps
+        time.sleep(random.uniform(0.1, 0.2))
 
 def frustrated_scribbling(min_x, min_y, max_x, max_y):
     """
